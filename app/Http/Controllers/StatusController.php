@@ -9,7 +9,7 @@ class StatusController extends Controller
 {
     public function store()
     {
-        request()->validate(['body' => 'required']);
+        request()->validate(['body' => 'required|min:5']);
         $status = Status::create([
             'user_id' => auth()->id(),
             'body' => request('body')

@@ -63,10 +63,32 @@ class CreateStatusTest extends TestCase
 
          //$response->assertSessionHasErrors('body');
 
+         $response->assertStatus(422);
+
          $response->assertJsonStructure([
              'message', 'errors' => ['body']
          ]);
 
      }
+
+     /**
+     * @test
+     */
+
+     public function aStatusRequiresABodyMinFiveCharacters(){
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+
+        $response = $this->postJson(route('statuses.store'),['body' => 'abcd']);
+
+        //$response->assertSessionHasErrors('body');
+
+        $response->assertStatus(422);
+
+        $response->assertJsonStructure([
+            'message', 'errors' => ['body']
+        ]);
+
+    }
 
 }
